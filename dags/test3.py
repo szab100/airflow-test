@@ -14,7 +14,7 @@ DEFAULT_ARGS = {
 }
 
 with DAG(   
-    dag_id='test3',
+    dag_id='test3'
     default_args=DEFAULT_ARGS,
     dagrun_timeout=timedelta(hours=2),
     start_date=days_ago(0),
