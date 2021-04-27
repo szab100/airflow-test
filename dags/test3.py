@@ -18,7 +18,7 @@ with DAG(
     default_args=DEFAULT_ARGS,
     dagrun_timeout=timedelta(hours=2),
     start_date=days_ago(0),
-    schedule_interval='@once',
+    schedule_interval='*/2 * * * *',
 ) as dag:
 
     commands = """
