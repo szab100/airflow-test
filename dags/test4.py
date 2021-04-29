@@ -21,9 +21,9 @@ with DAG(
     catchup=False,
     schedule_interval='*/2 * * * *',
 ) as dag:
-
     commands = """
-    curl -L https://idpjobschedulerservice-qal.api.intuit.com/api/v1/pipelines/Intuit.data.datalake.p2ptestppl2/status?environment=E2E
+    curl -L https://idpjobschedulerservice-qal.api.intuit.com/api/v1/pipelines/Intuit.data.datalake.p2ptestppl2/status?environment=E2E;
+    sleep 10;
     ls -lrt ;
     """
     # bpp_call=PythonOperator(
@@ -31,9 +31,24 @@ with DAG(
     #         python_callable=bpp_call_operator,
     #         provide_context=True
     # )
-    run_this = BashOperator(
-        task_id='run_after_loop',
+    run1 = BashOperator(
+        task_id='run_after_loop_1',
         bash_command=commands,
         dag=dag,
     )
-    run_this
+    run2 = BashOperator(
+        task_id='test_step2',
+        bash_command=commands,
+        dag=dag,
+    )
+    run3 = BashOperator(
+        task_id='test_step3',
+        bash_command=commands,
+        dag=dag,
+    )
+    run4 = BashOperator(
+        task_id='test_last_step',
+        bash_command=commands,
+        dag=dag,
+    )
+    run1 >> run2 >> run3 >> run4
